@@ -1,0 +1,43 @@
+{
+    "name": "lincanbin/carbon-forum",
+    "description": "A high performance open-source forum software written in PHP.",
+    "type": "project",
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "Canbin Lin",
+            "email": "lincanbin@hotmail.com",
+            "homepage": "http://www.94cb.com/"
+        }
+    ],
+    "config": {
+        "platform": {
+            "php": "5.4.0"
+        },
+        "vendor-dir": "library/vendor"
+    },
+    "require": {
+        "php": ">=5.4.0",
+        "phpmailer/phpmailer": "~5.2.28"
+    },
+    "autoload": {
+        "classmap": [
+            "library/PDO.class.php",
+            "library/PDO.Log.class.php",
+            "library/WhiteHTMLFilterConfig.php",
+            "library/WhiteHTMLFilter.php",
+            "library/MemcacheMod.class.php",
+            "library/XCache.class.php",
+            "library/ImageResize.class.php",
+            "library/MaterialDesign.Avatars.class.php",
+            "library/Oauth.GitHub.class.php",
+            "library/Oauth.QQ.class.php",
+            "library/Oauth.WeChat.class.php",
+            "library/Oauth.Weibo.class.php",
+            "library/PHPAnalysis.class.php",
+            "library/SearchClient.class.php",
+            "library/URL.class.php",
+            "library/Uploader.class.php"
+        ]
+    }
+}
