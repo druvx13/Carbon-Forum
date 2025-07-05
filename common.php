@@ -25,11 +25,26 @@ if ((@include __DIR__ . '/config.php') != 1) {
 	header("Location: install/");
 	exit(); //No errors
 }
+
+// Initialize Composer Autoloader
+if (file_exists(LibraryPath . 'vendor/autoload.php')) {
+	require(LibraryPath . 'vendor/autoload.php');
+} else {
+	// Fallback or error if Composer wasn't run
+	// For now, let's try to require essential classes manually if autoloader is missing,
+	// though this shouldn't happen in a properly set up environment.
+	// This also helps maintain compatibility if someone deploys without running composer install,
+	// though they'd miss out on PHPMailer.
+	require(LibraryPath . 'PDO.class.php');
+	require(LibraryPath . 'WhiteHTMLFilterConfig.php');
+	require(LibraryPath . 'WhiteHTMLFilter.php');
+}
+
 require(LanguagePath . 'common.php');
 //Initialize PHP Data Object(Database)
-require(LibraryPath . 'PDO.class.php');
-require(LibraryPath . 'WhiteHTMLFilterConfig.php');
-require(LibraryPath . 'WhiteHTMLFilter.php');
+// require(LibraryPath . 'PDO.class.php'); // Handled by Composer autoloader
+// require(LibraryPath . 'WhiteHTMLFilterConfig.php'); // Handled by Composer autoloader
+// require(LibraryPath . 'WhiteHTMLFilter.php'); // Handled by Composer autoloader
 
 $DB = new Db(DBHost, DBPort, DBName, DBUser, DBPassword);
 //Initialize MemCache(d) / Redis
@@ -44,17 +59,21 @@ if (EnableMemcache) {
 		}
 	} elseif (extension_loaded('memcache')) {
 		//MemCache
-		require(LibraryPath . "MemcacheMod.class.php");
-		$MCache = new MemcacheMod(MemCacheHost, MemCachePort);
+		// require(LibraryPath . "MemcacheMod.class.php"); // Handled by Composer autoloader
+		if (class_exists('MemcacheMod')) {
+			$MCache = new MemcacheMod(MemCacheHost, MemCachePort);
+		}
 	} elseif (extension_loaded('redis')) {
 		//Redis
 		//https://github.com/phpredis/phpredis
-		$MCache = new Redis();
+		$MCache = new Redis(); // Redis class is usually available globally if extension is loaded
 		$MCache->pconnect(MemCacheHost, MemCachePort);
 	} elseif (extension_loaded('xcache')) {
 		// XCache
-		require(LibraryPath . "XCache.class.php");
-		$MCache = new XCache();
+		// require(LibraryPath . "XCache.class.php"); // Handled by Composer autoloader
+		if (class_exists('XCache')) {
+			$MCache = new XCache();
+		}
 	}
 }
 
