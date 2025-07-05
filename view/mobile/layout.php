@@ -9,7 +9,7 @@ if(!$IsAjax){
 	echo $CurUserID && $CurUserInfo['NewNotification']?str_replace('{{NewMessage}}', $CurUserInfo['NewNotification'], $Lang['New_Message']):'';
 	echo $PageTitle;
 	echo $UrlPath=='home'?'':' - '.$Config['SiteName']; ?></title>
-	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+	<meta charset="UTF-8" />
 	<meta http-equiv="Cache-Control" content="no-siteapp" />
 	<meta http-equiv="cleartype" content="on" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, minimal-ui" />

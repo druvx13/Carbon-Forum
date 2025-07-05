@@ -12,13 +12,13 @@
     ],
     "config": {
         "platform": {
-            "php": "5.4.0"
+            "php": "8.2"
         },
         "vendor-dir": "library/vendor"
     },
     "require": {
-        "php": ">=5.4.0",
-        "phpmailer/phpmailer": "~5.2.28"
+        "php": "^8.2",
+        "phpmailer/phpmailer": "^6.10.0"
     },
     "autoload": {
         "classmap": [

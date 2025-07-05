@@ -111,19 +111,8 @@ $_PUT = array();
 $_DELETE = array();
 $_OPTIONS = array();
 
-//消除低版本中魔术引号的影响
-if (version_compare(PHP_VERSION, '5.4.0') < 0 && get_magic_quotes_gpc()) {
-	function StripslashesDeep($var)
-	{
-		return is_array($var) ? array_map('StripslashesDeep', $var) : stripslashes($var);
-	}
-
-	$_GET = StripslashesDeep($_GET);
-	$_POST = StripslashesDeep($_POST);
-	$_COOKIE = StripslashesDeep($_COOKIE);
-	$_REQUEST = StripslashesDeep($_REQUEST);
-}
-
+// Magic quotes were removed in PHP 5.4 and get_magic_quotes_gpc() removed in PHP 7.4.
+// This block is no longer needed.
 
 // At某人并提醒他，使用时常在其前后加空格或回车，如 “@admin ”
 function AddingNotifications($Content, $TopicID, $PostID, $FilterUser = '')
@@ -142,8 +131,8 @@ function AddingNotifications($Content, $TopicID, $PostID, $FilterUser = '')
 	if ($FilterUser != $CurUserName) {
 		$ExceptionUser[] = $FilterUser;
 	}
-	// 正则跟用户注册、登录保持一致
-	preg_match_all('/\B\@([a-zA-Z0-9\x80-\xff\-_]{4,20})/', strip_tags($Content, '<br><p>'), $out, PREG_PATTERN_ORDER);
+	// 正则跟用户注册、登录保持一致 (Ensure 'u' modifier for UTF-8 handling)
+	preg_match_all('/\B\@([a-zA-Z0-9\x80-\xff\-_]{4,20})/u', strip_tags($Content, '<br><p>'), $out, PREG_PATTERN_ORDER);
 	$TemporaryUserList = array_unique($out[1]); //排重
 	$TemporaryUserList = array_diff($TemporaryUserList, $ExceptionUser);
 	//对数组重新分配下标
@@ -276,17 +265,9 @@ function AlertMsg($PageTitle, $Error, $StatusCode = 200)
 //获取数组中的某一列
 function ArrayColumn($Input, $ColumnKey)
 {
-	if (version_compare(PHP_VERSION, '5.5.0') < 0) {
-		$Result = array();
-		if ($Input) {
-			foreach ($Input as $Value) {
-				$Result[] = $Value[$ColumnKey];
-			}
-		}
-		return $Result;
-	} else {
-		return array_column($Input, $ColumnKey);
-	}
+	// Native array_column is available in PHP >= 5.5.0.
+	// Since target is PHP 8.2, we can directly use it.
+	return array_column($Input, $ColumnKey);
 }
 
 
@@ -484,11 +465,9 @@ function GetCookie($Key, $DefaultValue = false)
 //Hash值校验，防止时序攻击法
 function HashEquals($KnownString, $UserString)
 {
-	if (version_compare(PHP_VERSION, '5.6.0') < 0) {
-		return ($KnownString === $UserString);
-	} else {
-		return hash_equals($KnownString, $UserString);
-	}
+	// Native hash_equals is available in PHP >= 5.6.0.
+	// Since target is PHP 8.2, we can directly use it.
+	return hash_equals($KnownString, $UserString);
 }
 
 //长整数intval，防止溢出，目前暂未用到
@@ -601,7 +580,7 @@ function Request($Type, $Key, $DefaultValue = '')
 function SetStyle($PathName, $StyleName)
 {
 	global $IsApp, $TemplatePath, $Style;
-	if ($StyleName = 'API') {
+	if ($StyleName == 'API') {
 		$IsApp = true;
 		header('Access-Control-Allow-Origin: *');
 		header('Content-Type: application/json; charset=utf-8');

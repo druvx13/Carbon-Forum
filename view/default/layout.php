@@ -67,13 +67,12 @@ header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
 ob_start();
 if(!$IsAjax){
-?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $Lang['Language']; ?>"
-	  lang="<?php echo $Lang['Language']; ?>">
+?><!DOCTYPE html>
+<html lang="<?php echo $Lang['Language']; ?>">
 <head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="renderer" content="webkit"/>
-	<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 	<meta http-equiv="Cache-Control" content="no-siteapp"/>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 	<?php
@@ -137,7 +136,7 @@ if(!$IsAjax){
 <body>
 <!-- content wrapper start -->
 <div class="wrapper">
-	<div class="nav-bar">
+	<header class="nav-bar">
 		<div class="nav-panel">
 			<div class="inner-nav-panel">
 				<div class="logo">
@@ -205,7 +204,7 @@ if(!$IsAjax){
 				<div class="bar1" id="progressBar1"></div>
 			</div>
 		</div>
-	</div>
+	</header>
 	<!-- main start -->
 	<div class="main-content"></div>
 	<?php
@@ -215,7 +214,7 @@ if(!$IsAjax){
 		<?php
 	}
 	?>
-	<div class="main" id="main">
+	<main class="main" id="main">
 		<?php
 		if ($IsMobile && $Config['MobileDomainName']) {
 			?>
@@ -238,10 +237,11 @@ if(!$IsAjax){
 	if (!$IsAjax){
 	?>
 	<!-- main end -->
+	</main>
 	<div class="c"></div>
 
 	<!-- footer start -->
-	<div class="copyright">
+	<footer class="copyright">
 		<p>
 			<?php echo $Config['SiteName']; ?> Powered By © 2006-2016 <a href="http://www.94cb.com" target="_blank">Carbon
 				Forum</a> V<?php echo CARBON_FORUM_VERSION; ?>
@@ -255,7 +255,7 @@ if(!$IsAjax){
 			<?php echo $DB->querycount; ?> SQL Query(s),
 			<?php echo FormatBytes(memory_get_usage(false)); ?> Memory Usage
 		</p>
-	</div>
+	</footer>
 	<!-- footer end -->
 </div>
 <!-- content wrapper end -->
