@@ -202,7 +202,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		// Note: This is commented out by default. Uncomment if you want to convert existing data.
 		// Make sure to backup your database before running this!
 		
-		// $DB->query("ALTER DATABASE `" . DATABASE_PREFIX . "` CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci;");
+		// Note: To convert the database charset, use: ALTER DATABASE `your_database_name` CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+		// Replace 'your_database_name' with your actual database name (found in config.php as DBName)
+		// $DB->query("ALTER DATABASE `" . $DBName . "` CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci;");
 		// $DB->query("ALTER TABLE `" . DATABASE_PREFIX . "config` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;");
 		// $DB->query("ALTER TABLE `" . DATABASE_PREFIX . "favorites` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;");
 		// $DB->query("ALTER TABLE `" . DATABASE_PREFIX . "follow` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;");
