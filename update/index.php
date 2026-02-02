@@ -2,7 +2,7 @@
 @set_time_limit(0);
 date_default_timezone_set('Asia/Shanghai'); //设置中国时区
 $Message = '';
-$Version = '5.9.0';
+$Version = '6.0.0';
 define('DATABASE_PREFIX', 'carbon_');
 
 if (is_file('update.lock')) {
@@ -195,6 +195,34 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$DB->query("INSERT INTO `" . DATABASE_PREFIX . "config` VALUES ('FreezingTime', '0');");
 		$DB->query("INSERT INTO `" . DATABASE_PREFIX . "config` VALUES ('PostingInterval', '8');");
 	}
+
+	//当前版本低于6.0.0，需要进行的升级到6.0.0的升级操作
+	if (VersionCompare('6.0.0', $OldVersion)) {
+		// Convert database to utf8mb4 for better Unicode support
+		// Note: This is commented out by default. Uncomment if you want to convert existing data.
+		// Make sure to backup your database before running this!
+		
+		// Note: To convert the database charset, use: ALTER DATABASE `your_database_name` CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+		// Replace 'your_database_name' with your actual database name (found in config.php as DBName)
+		// $DB->query("ALTER DATABASE `" . $DBName . "` CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci;");
+		// $DB->query("ALTER TABLE `" . DATABASE_PREFIX . "config` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;");
+		// $DB->query("ALTER TABLE `" . DATABASE_PREFIX . "favorites` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;");
+		// $DB->query("ALTER TABLE `" . DATABASE_PREFIX . "follow` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;");
+		// $DB->query("ALTER TABLE `" . DATABASE_PREFIX . "ignoring` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;");
+		// $DB->query("ALTER TABLE `" . DATABASE_PREFIX . "inbox` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;");
+		// $DB->query("ALTER TABLE `" . DATABASE_PREFIX . "notifications` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;");
+		// $DB->query("ALTER TABLE `" . DATABASE_PREFIX . "postrating` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;");
+		// $DB->query("ALTER TABLE `" . DATABASE_PREFIX . "posts` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;");
+		// $DB->query("ALTER TABLE `" . DATABASE_PREFIX . "posttags` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;");
+		// $DB->query("ALTER TABLE `" . DATABASE_PREFIX . "roles` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;");
+		// $DB->query("ALTER TABLE `" . DATABASE_PREFIX . "statistics` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;");
+		// $DB->query("ALTER TABLE `" . DATABASE_PREFIX . "tags` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;");
+		// $DB->query("ALTER TABLE `" . DATABASE_PREFIX . "topics` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;");
+		// $DB->query("ALTER TABLE `" . DATABASE_PREFIX . "upload` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;");
+		// $DB->query("ALTER TABLE `" . DATABASE_PREFIX . "users` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;");
+		// $DB->query("ALTER TABLE `" . DATABASE_PREFIX . "vote` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;");
+	}
+
 	$Message = '升级成功。<br />Update successfully! ';
 	//版本修改
 	$DB->query("UPDATE `" . DATABASE_PREFIX . "config` SET `ConfigValue`='" . $Version . "' WHERE `ConfigName`='Version'");
@@ -207,8 +235,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		touch("../install/install.lock");
 	}
 } else {
-	if (version_compare(PHP_VERSION, '5.4.0') < 0) {
-		$Message = '你的PHP版本过低，可能会无法正常使用！<br />Your PHP version is too low, it may not work properly!';
+	if (version_compare(PHP_VERSION, '8.0.0') < 0) {
+		$Message = '你的PHP版本过低，Carbon-Forum 6.0需要PHP 8.0或更高版本！<br />Your PHP version is too low, Carbon-Forum 6.0 requires PHP 8.0 or higher!';
 	}
 	if (!extension_loaded('pdo_mysql')) {
 		$Message = '你的PHP未编译pdo_mysql，本程序无法正常工作<br />Your PHP don’t support pdo_mysql extension, this program does not work! ';

@@ -34,6 +34,7 @@
 
 #Server related files and data files
 *.lock
+!library/composer.lock
 *.log
 /library/logs
 /library/Uploader.config.json
@@ -45,4 +46,4 @@
 /config.php
 
 #Composer
-/library/vendor
+# Note: vendor directory is now included in repository for easier deployment

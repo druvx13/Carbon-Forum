@@ -1,4 +1,4 @@
-# Carbon-Forum    [![Build Status](https://travis-ci.org/lincanbin/Carbon-Forum.svg?branch=develop)](https://travis-ci.org/lincanbin/Carbon-Forum)
+# Carbon-Forum    [![Build Status](https://github.com/lincanbin/Carbon-Forum/workflows/CI/badge.svg)](https://github.com/lincanbin/Carbon-Forum/actions) [![Travis Status](https://travis-ci.org/lincanbin/Carbon-Forum.svg?branch=develop)](https://travis-ci.org/lincanbin/Carbon-Forum)
 
 A high performance open-source forum software written in PHP.
 
@@ -17,11 +17,11 @@ A high performance open-source forum software written in PHP.
 
 ## Requirements
 
-* PHP version 5.4.0 or higher.
-* The [__PDO_MYSQL__](http://php.net/manual/en/ref.pdo-mysql.php) PHP Package.
-* MySQL version 5.0 or higher.
-* The [__mod_rewrite__](http://httpd.apache.org/docs/2.2/mod/mod_rewrite.html) Apache module / [__ngx_http_rewrite_module__](https://github.com/lincanbin/Carbon-Forum/blob/master/nginx.conf) / [__ISAPI_Rewrite__](http://www.helicontech.com/isapi_rewrite/) IIS module / IIS7+. 
-* The [__mod_headers__](http://httpd.apache.org/docs/2.2/mod/mod_headers.html) module is needed if you run Carbon Forum on Apache HTTP Server.
+* PHP version 8.0.0 or higher.
+* The [__PDO_MYSQL__](http://php.net/manual/en/ref.pdo-mysql.php) PHP extension.
+* MySQL version 5.7 or higher (or MariaDB 10.2+).
+* The [__mod_rewrite__](http://httpd.apache.org/docs/2.4/mod/mod_rewrite.html) Apache module / [__ngx_http_rewrite_module__](https://github.com/lincanbin/Carbon-Forum/blob/master/nginx.conf) / [__ISAPI_Rewrite__](http://www.helicontech.com/isapi_rewrite/) IIS module / IIS7+. 
+* The [__mod_headers__](http://httpd.apache.org/docs/2.4/mod/mod_headers.html) module is recommended if you run Carbon Forum on Apache HTTP Server.
 
 ## Install
 
@@ -31,10 +31,38 @@ A high performance open-source forum software written in PHP.
 
 ## Upgrade
 
-1. Backup files( ```/upload/*``` ) and databases. 
-2. Delete all files except ```/upload/*```, and upload the new version files that extract from the the latest version packet. 
+### Upgrading from 5.9.0 or Earlier to 6.0.0
+
+**IMPORTANT:** Version 6.0.0 introduces breaking changes. Please read carefully before upgrading.
+
+**Breaking Changes:**
+- Requires PHP 8.0 or higher (previously 5.4+)
+- Requires MySQL 5.7 or higher (previously 5.0+)
+- Changes database charset from utf8 to utf8mb4
+
+**Pre-Upgrade Steps:**
+1. **Check your environment** by running: `php check-upgrade.php`
+2. **Backup everything** (database and files)
+3. Ensure PHP 8.0+ is installed
+4. Ensure MySQL 5.7+ is installed
+
+**Upgrade Steps:**
+1. Backup files (`/upload/*`) and databases.
+2. Delete all files except `/upload/*`, and upload the new version files from the latest release.
+3. Ensure that the entire directory is writable.
+4. Run: `cd library && composer install`
+5. Open `http://www.yourdomain.com/update` and follow the update wizard.
+6. Clear all caches (MemCache/Redis if enabled, browser cache).
+7. Test thoroughly.
+
+**See UPGRADE_NOTES.md for detailed migration instructions.**
+
+### Upgrading Between Minor Versions (Same Major Version)
+
+1. Backup files (`/upload/*`) and databases. 
+2. Delete all files except `/upload/*`, and upload the new version files that extract from the latest version packet. 
 3. Ensure that the entire directory are writable.
-4. Open ```http://www.yourdomain.com/update``` and update.
+4. Open `http://www.yourdomain.com/update` and update.
 
 ## Features
 

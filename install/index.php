@@ -6,7 +6,7 @@ date_default_timezone_set('Asia/Shanghai');
 //error_reporting(0); //don't show errors
 
 $Message = '';
-$Version = '5.9.0';
+$Version = '6.0.0';
 define('PREFIX', 'carbon_');
 if (function_exists('apache_get_modules') && !in_array('mod_rewrite', apache_get_modules())) {
 	die("Apache用户请先开启mod_rewrite！<br>Please enable Apache mod_rewrite! ");
@@ -109,8 +109,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	}
 
 } else {
-	if (version_compare(PHP_VERSION, '5.4.0') < 0) {
-		$Message = '你的PHP版本过低，可能会无法正常使用！<br />Your PHP version is too low, it may not work properly!';
+	if (version_compare(PHP_VERSION, '8.0.0') < 0) {
+		$Message = '你的PHP版本过低，Carbon-Forum 6.0需要PHP 8.0或更高版本！<br />Your PHP version is too low, Carbon-Forum 6.0 requires PHP 8.0 or higher!';
 
 	}
 	if (!extension_loaded('pdo_mysql')) {

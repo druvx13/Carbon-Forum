@@ -54,12 +54,10 @@ class DB
 	private function Connect()
 	{
 		try {
-			$this->pdo = new PDO('mysql:host=' . $this->Host . ';port=' . $this->DBPort . ';dbname=' . $this->DBName . ';charset=utf8', 
+			$this->pdo = new PDO('mysql:host=' . $this->Host . ';port=' . $this->DBPort . ';dbname=' . $this->DBName . ';charset=utf8mb4', 
 				$this->DBUser, 
 				$this->DBPassword,
 				array(
-					//For PHP 5.3.6 or lower
-					PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8",
 					PDO::ATTR_EMULATE_PREPARES => false,
 					//长连接
 					//PDO::ATTR_PERSISTENT => true,
