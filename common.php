@@ -15,7 +15,7 @@
 逐渐替换为帕斯卡命名法
 数据库从设计上避免使用Join多表联查
 */
-define('CARBON_FORUM_VERSION', '5.9.0');
+define('CARBON_FORUM_VERSION', '6.0.0');
 
 //Initialize timer
 $StartTime = microtime(true);
@@ -92,18 +92,7 @@ $_PUT = array();
 $_DELETE = array();
 $_OPTIONS = array();
 
-//消除低版本中魔术引号的影响
-if (version_compare(PHP_VERSION, '5.4.0') < 0 && get_magic_quotes_gpc()) {
-	function StripslashesDeep($var)
-	{
-		return is_array($var) ? array_map('StripslashesDeep', $var) : stripslashes($var);
-	}
-
-	$_GET = StripslashesDeep($_GET);
-	$_POST = StripslashesDeep($_POST);
-	$_COOKIE = StripslashesDeep($_COOKIE);
-	$_REQUEST = StripslashesDeep($_REQUEST);
-}
+// Magic quotes removed in PHP 5.4.0, this code is no longer needed for modern PHP versions
 
 
 // At某人并提醒他，使用时常在其前后加空格或回车，如 “@admin ”

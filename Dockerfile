@@ -1,11 +1,11 @@
-FROM ubuntu:14.04
+FROM ubuntu:22.04
 
 #RUN echo "nameserver 192.168.99.1" > /etc/resolv.conf ; \
 RUN \
     sed -i "s#archive.ubuntu.com#cn.archive.ubuntu.com#" /etc/apt/sources.list ; \
     echo 'mysql-server mysql-server/root_password password kf_kf_kf' | debconf-set-selections  ; \
     echo 'mysql-server mysql-server/root_password_again password kf_kf_kf' | debconf-set-selections ;\
-    apt-get update && apt-get install -y nginx php5-fpm php5-mysqlnd php5-curl php5-gd mysql-server mysql-client ; \
+    DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y nginx php8.1-fpm php8.1-mysql php8.1-curl php8.1-gd mysql-server mysql-client ; \
     service mysql start && echo 'create database knowledge;create user klg_u@localhost identified by "magic*docker";grant all privileges on knowledge.* to klg_u@localhost '| mysql -uroot -p'kf_kf_kf' ; \
     useradd -d /var/www/carbon_forum web; \
     mkdir -p /var/www/carbon_forum
@@ -16,15 +16,16 @@ RUN \
 # phpize && ./configure && make && make install;\
 # rm /tmp/*; \
 
-COPY docker_resources/sphinx.so /usr/lib/php5/20121212/
+# Updated for PHP 8.1
+# COPY docker_resources/sphinx.so /usr/lib/php/20210902/
 
 #RUN echo "nameserver 192.168.99.1" > /etc/resolv.conf ;
 RUN \ 
         apt-get install curl;\
         apt-get install -y sphinxsearch  libsphinxclient-0.0.1 sphinxbase-utils ;\
         sed -i "s/START=no/START=yes/" /etc/default/sphinxsearch; \
-        echo "extension=sphinx.so" > /etc/php5/mods-available/sphinx.ini ;\
-        ln -sv /etc/php5/mods-available/sphinx.ini  /etc/php5/fpm/conf.d/30-sphinx.ini;\
+        echo "extension=sphinx.so" > /etc/php/8.1/mods-available/sphinx.ini ;\
+        ln -sv /etc/php/8.1/mods-available/sphinx.ini  /etc/php/8.1/fpm/conf.d/30-sphinx.ini;\
         service mysql start  && echo 'create user sphinx_u@localhost identified by "search_perfect";grant SELECT on knowledge.* to sphinx_u@localhost '| mysql -uroot -p'kf_kf_kf' ; \
         echo '*/5 * * * *  /usr/bin/indexer --config /etc/sphinxsearch/sphinx.conf --all --rotate >/dev/null 2>&1' |crontab
 

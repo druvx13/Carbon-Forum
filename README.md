@@ -17,11 +17,11 @@ A high performance open-source forum software written in PHP.
 
 ## Requirements
 
-* PHP version 5.4.0 or higher.
-* The [__PDO_MYSQL__](http://php.net/manual/en/ref.pdo-mysql.php) PHP Package.
-* MySQL version 5.0 or higher.
-* The [__mod_rewrite__](http://httpd.apache.org/docs/2.2/mod/mod_rewrite.html) Apache module / [__ngx_http_rewrite_module__](https://github.com/lincanbin/Carbon-Forum/blob/master/nginx.conf) / [__ISAPI_Rewrite__](http://www.helicontech.com/isapi_rewrite/) IIS module / IIS7+. 
-* The [__mod_headers__](http://httpd.apache.org/docs/2.2/mod/mod_headers.html) module is needed if you run Carbon Forum on Apache HTTP Server.
+* PHP version 8.0.0 or higher.
+* The [__PDO_MYSQL__](http://php.net/manual/en/ref.pdo-mysql.php) PHP extension.
+* MySQL version 5.7 or higher (or MariaDB 10.2+).
+* The [__mod_rewrite__](http://httpd.apache.org/docs/2.4/mod/mod_rewrite.html) Apache module / [__ngx_http_rewrite_module__](https://github.com/lincanbin/Carbon-Forum/blob/master/nginx.conf) / [__ISAPI_Rewrite__](http://www.helicontech.com/isapi_rewrite/) IIS module / IIS7+. 
+* The [__mod_headers__](http://httpd.apache.org/docs/2.4/mod/mod_headers.html) module is recommended if you run Carbon Forum on Apache HTTP Server.
 
 ## Install
 

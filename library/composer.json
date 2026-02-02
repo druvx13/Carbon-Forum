@@ -1,5 +1,11 @@
 {
 	"require": {
-		"stichoza/google-translate-php": "~3.2"
+		"php": "^8.0",
+		"stichoza/google-translate-php": "^5.1"
+	},
+	"config": {
+		"platform": {
+			"php": "8.0.0"
+		}
 	}
 }
